@@ -1,27 +1,8 @@
 #!/usr/bin/python
 
-import os, time
+import os, sys, time
 from urllib import urlopen
 from Foundation import NSArray, NSDictionary, NSString, NSURL
-
-
-# ---------------------------------------------------------------------------
-
-XPROTECTS = [ { "name": "Snow Leopard",
-				"url" : "https://configuration.apple.com/configurations/macosx/xprotect/1/clientConfiguration.plist" },
-			  { "name": "Lion",
-				"url" : "https://configuration.apple.com/configurations/macosx/xprotect/2/clientConfiguration.plist" },
-			  { "name": "Mountain Lion",
-				"url" : "https://configuration.apple.com/configurations/macosx/xprotect/3/clientConfiguration.plist" },
-			  { "name": "Mavericks",
-				"surl": "https://swscan.apple.com/content/catalogs/others/index-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz" },
-			  { "name": "Yosemite",
-			    "surl": "https://swscan.apple.com/content/catalogs/others/index-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz" },
-			  { "name": "Yosemite Seed",
-			    "surl": "https://swscan.apple.com/content/catalogs/others/index-10.10seed-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz" },
-			  { "name": "Local",
-				"data": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/XProtect.plist",
-				"meta": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/XProtect.meta.plist" } ]
 
 
 # ---------------------------------------------------------------------------
@@ -114,6 +95,11 @@ def count_matches(matches):
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
+	
+	XPROTECTS = NSArray.arrayWithContentsOfFile_(os.path.join(sys.path[0], "XPlist.plist"))
+	
+	if XPROTECTS == None:
+		raise Exception("Invalid URLs property list file.")
 	
 	for xprotect in XPROTECTS:
 		
