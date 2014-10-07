@@ -98,7 +98,7 @@ if __name__ == "__main__":
 	
 	XPROTECTS = NSArray.arrayWithContentsOfFile_(os.path.join(sys.path[0], "XPlist.plist"))
 	
-	if XPROTECTS == None:
+	if not XPROTECTS:
 		raise Exception("Invalid URLs property list file.")
 	
 	for xprotect in XPROTECTS:
