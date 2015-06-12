@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, sys, time
+import os, re, sys, time
 from urllib import urlopen
 from Foundation import NSArray, NSDictionary, NSString, NSURL
 
@@ -14,7 +14,7 @@ def init_with_files(fmeta, fdata):
 	return meta, data
 
 
-def init_with_sucatalog(sucatalog, pkg_name = "XProtectPlistConfigData.pkg"):
+def init_with_sucatalog(sucatalog, pkg_re = "^.*/XProtectPlistConfigData.*\.pkg$"):
 	meta = None
 	data = None
 	pkg_url = None
@@ -27,8 +27,9 @@ def init_with_sucatalog(sucatalog, pkg_name = "XProtectPlistConfigData.pkg"):
 	
 	for k, v in d["Products"].items():
 		for package in v["Packages"]:
-			if package["URL"].find(pkg_name) != -1:
-				pkg_url = package["URL"]
+			r = re.compile(pkg_re)
+			if r.findall(package["URL"]) != []:
+			 	pkg_url = package["URL"]
 	
 	if not pkg_url:
 		raise Exception("Package not found.", sucatalog, pkg_name)
