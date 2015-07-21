@@ -19,22 +19,9 @@ def filter(text):
 		if line.find("<key>Identity</key>") != -1:
 			# SHA1 hex digest			
 			
-			if lines[i+3].find("</data>") != -1:
-				# <data>
-				# wIAM1QlbKNpLbKAUaKJ5+1vmkho=
-				# </data>
-				lines[i+2] = process_identity(lines[i+2])
+			if lines[i+1].find("<data>") != -1:
+				lines[i+1] = process_identity(lines[i+1])
 			
-			else:
-				# <data>
-				# A/ziWngj5jE5
-				# dSUGZo7t7a5N
-				# M7c=
-				# </data>
-				lines[i+2] = process_identity(lines[i+2] + lines[i+3].strip() + lines[i+4].strip())
-				lines.pop(i+4)
-				lines.pop(i+3)
-		
 		elif line.find("<key>Pattern</key>") != -1:
 			# Regular expression
 			lines[i+1] = process_pattern(lines[i+1])
