@@ -31,10 +31,10 @@ def filter(text):
 	return "\n".join(lines)
 
 def process_identity(line):
-	r = re.compile("([\t]+)(.+)")
+	r = re.compile("([\t]+)<data>(.+)</data>")
 	p = r.findall(line)
 
-	return "{pad}{sha}".format(
+	return "{pad}<data>{sha}</data>".format(
 		pad = p[0][0],
 		sha = p[0][1].decode("base64").encode("hex")
 		)
