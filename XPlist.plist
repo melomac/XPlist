@@ -39,6 +39,18 @@
 		<string>https://swscan.apple.com/content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz</string>
 	</dict>
 	<dict>
+		<key>name</key>
+		<string>Sierra</string>
+		<key>surl</key>
+		<string>https://swscan.apple.com/content/catalogs/others/index-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Sierra Seed</string>
+		<key>surl</key>
+		<string>https://swscan.apple.com/content/catalogs/others/index-10.12seed-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz</string>
+	</dict>
+	<dict>
 		<key>data</key>
 		<string>/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/XProtect.plist</string>
 		<key>meta</key>
