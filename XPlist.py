@@ -29,7 +29,7 @@ def init_with_sucatalog(sucatalog, pkg_re = "^.*/XProtectPlistConfigData.*\.pkg$
 		for package in v["Packages"]:
 			r = re.compile(pkg_re)
 			if r.findall(package["URL"]) != []:
-			 	pkg_url = package["URL"]
+				pkg_url = package["URL"]
 	
 	if not pkg_url:
 		raise Exception("Package not found.", sucatalog, pkg_name)
