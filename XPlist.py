@@ -115,7 +115,10 @@ if __name__ == "__main__":
 		
 		elif xprotect.has_key("surl"):
 			print xprotect["surl"]
-			meta, data, pkg_url = init_with_sucatalog(xprotect["surl"])
+			if xprotect.has_key("pkg_re"):
+				meta, data, pkg_url = init_with_sucatalog(xprotect["surl"], xprotect["pkg_re"])
+			else:
+				meta, data, pkg_url = init_with_sucatalog(xprotect["surl"])
 			print pkg_url
 		
 		elif xprotect.has_key("data"):
