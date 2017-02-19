@@ -27,7 +27,7 @@ def decode_patterns(text):
 	return re.sub(r, decode_pattern, text)
 
 def decode_pattern(m):
-	r = re.compile(r"([\dA-F][\dA-F]+)")
+	r = re.compile(r"([\dA-F]{2,})")
 
 	return m.group(1) + re.sub(r, decode_hex, m.group(2)) + m.group(3)
 
