@@ -11,60 +11,28 @@ from sys import stdin, stdout
 # ---------------------------------------------------------------------------
 
 def filter(text):
-	lines = text.splitlines()
+	return decode_patterns(decode_identities(text))
 
-	i = 0
-	for line in lines:
-		
-		if line.find("<key>Identity</key>") != -1:
-			# SHA1 hex digest			
-			
-			if lines[i+1].find("<data>") != -1:
-				lines[i+1] = process_identity(lines[i+1])
-			
-		elif line.find("<key>Pattern</key>") != -1:
-			# Regular expression
-			lines[i+1] = process_pattern(lines[i+1])
+def decode_identities(text):
+	r = re.compile(r"(<key>Identity</key>.*?<data>)(.*?)(</data>)", flags=re.DOTALL)
 
-		i += 1
+	return re.sub(r, decode_identity, text)
 
-	return "\n".join(lines)
+def decode_identity(m):
+	return m.group(1) + m.group(2).decode("base64").encode("hex") + m.group(3)
 
-def process_identity(line):
-	r = re.compile("([\t]+)<data>(.+)</data>")
-	p = r.findall(line)
+def decode_patterns(text):
+	r = re.compile(r"(<key>Pattern</key>.*?<string>)(.*?)(</string>)", flags=re.DOTALL)
 
-	return "{pad}<data>{sha}</data>".format(
-		pad = p[0][0],
-		sha = p[0][1].decode("base64").encode("hex")
-		)
+	return re.sub(r, decode_pattern, text)
 
-def process_pattern(line):
-	r = re.compile("([\t]+)<string>(.+)</string>")
-	p = r.findall(line)
+def decode_pattern(m):
+	r = re.compile(r"([\dA-F][\dA-F]+)")
 
-	return "{pad}<string>\n{pattern}\n{pad}</string>".format(
-		pad = p[0][0],
-		pattern = _process_pattern(p[0][1], p[0][0])
-		)
+	return m.group(1) + re.sub(r, decode_hex, m.group(2)) + m.group(3)
 
-def _process_pattern(pattern, pad):
-	result = []
-
-	for p in pattern.split("*"):
-		try:
-			result.append("{pad}STR: {str}".format(
-				pad = pad,
-				str = p.decode("hex"))
-			)
-		
-		except:
-			result.append("{pad}HEX: {hex}".format(
-				pad = pad,
-				hex = p)
-			)
-
-	return "\n".join(result)
+def decode_hex(m):
+	return m.group().decode("hex")
 
 # ---------------------------------------------------------------------------
 
