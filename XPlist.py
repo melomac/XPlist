@@ -83,7 +83,7 @@ def count_matches(matches):
 	count = 0
 	
 	for match in matches:
-		if match["MatchType"] == "Match":
+		if match["MatchType"] in [ "Match", "MatchAll" ]:
 			count += 1
 		elif match["MatchType"] == "MatchAny":
 			count += len(match["Matches"])
