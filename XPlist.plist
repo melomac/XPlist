@@ -37,8 +37,6 @@
 		<string>El Capitan</string>
 		<key>surl</key>
 		<string>https://swscan.apple.com/content/catalogs/others/index-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz</string>
-		<key>pkg_re</key>
-		<string>^.*/XProtectPlistConfigData_1011\.pkg$</string>
 	</dict>
 	<!--
 	<dict>
