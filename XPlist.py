@@ -41,7 +41,10 @@ def init_with_sucatalog(sucatalog, pkg_re = "^.*/XProtectPlistConfigData.*\.pkg$
 	
 	cmds = [ "/usr/bin/curl -s -o '%s' '%s'" %(tmp_pkg, pkg_url),
 			 "/usr/sbin/pkgutil --expand '%s' '%s'" %(tmp_pkg, tmp_dir),
-			 "/usr/bin/tar xf '%s' -C '%s' -s '|.*/||' --include '*/XProtect.*'" %(tmp_tar, tmp_dir) ]
+			 "/usr/bin/tar xf '%s' -C '%s' -s '|.*/||'" %(tmp_tar, tmp_dir) +
+			 	"".join(map(lambda s: " --include '*/%s'" % s,
+			 		["XProtect.meta.plist", "XProtect.plist", "XProtect.yara"]))
+			 ]
 	
 	for cmd in cmds:
 		retcode = os.system(cmd)
